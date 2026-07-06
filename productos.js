@@ -1,68 +1,121 @@
+import { supabase } from './supabase.js'
+
+alert("ESTE ES EL PRODUCTOS JS NUEVO");
+
+
 // ===============================
 // PRODUCTOS
 // ===============================
 
-let productos = JSON.parse(localStorage.getItem("productos")) || [];
+let productos = [];
 
-// Mostrar productos al abrir
-mostrarProductos();
+
+// Cargar productos al abrir
+cargarProductos();
+
+
+// ===============================
+// CARGAR PRODUCTOS DESDE SUPABASE
+// ===============================
+
+async function cargarProductos() {
+
+    const { data, error } = await supabase
+        .from("productos")
+        .select("*");
+
+    if (error) {
+
+        console.error("Error cargando productos:", error);
+        return;
+
+    }
+
+    productos = data || [];
+
+    mostrarProductos();
+
+}
+
 
 // ===============================
 // GUARDAR PRODUCTO
 // ===============================
-function guardarProducto() {
+
+async function guardarProducto() {
+
+    alert("Entró a guardarProducto");
+
 
     const codigo = document.getElementById("codigo").value.trim();
     const nombre = document.getElementById("nombre").value.trim();
-    const compra = Number(document.getElementById("precioCompra").value);
+    const costo = Number(document.getElementById("precioCompra").value);
     const venta = Number(document.getElementById("precioVenta").value);
-    const stockInicial = Number(document.getElementById("stock").value);
 
-    if (codigo === "" || nombre === "" || compra <= 0 || venta <= 0 || stockInicial < 0) {
+
+    if (codigo === "" || nombre === "" || costo <= 0 || venta <= 0) {
+
         alert("Complete todos los datos.");
         return;
+
     }
 
-    productos.push({
 
-        codigo: codigo,
-        nombre: nombre,
-        compra: compra,
-        venta: venta,
+    const { error } = await supabase
+        .from("productos")
+        .insert([
+            {
+                codigo: codigo,
+                nombre: nombre,
+                costo: costo,
+                venta: venta
+            }
+        ]);
 
-        stockInicial: stockInicial,
-        stockActual: stockInicial,
 
-        categoria: "General"
+    if (error) {
 
-    });
+        console.error("Error guardando producto:", error);
+        alert("Error al guardar producto");
+        return;
 
-    guardarProductos();
+    }
+
+
+    alert("Producto guardado correctamente");
+
 
     limpiar();
 
-    mostrarProductos();
-}
-
-// ===============================
-// GUARDAR EN LOCALSTORAGE
-// ===============================
-function guardarProductos() {
-
-    localStorage.setItem("productos", JSON.stringify(productos));
+    cargarProductos();
 
 }
+
+
+// Hacer visible el botón del HTML
+
+window.guardarProducto = guardarProducto;
+
+
 
 // ===============================
 // MOSTRAR PRODUCTOS
 // ===============================
+
 function mostrarProductos() {
+
 
     const tabla = document.getElementById("tablaProductos");
 
+
+    if (!tabla) return;
+
+
     tabla.innerHTML = "";
 
-    productos.forEach((p, i) => {
+
+    productos.forEach((p) => {
+
 
         tabla.innerHTML += `
 
@@ -72,74 +125,84 @@ function mostrarProductos() {
 
             <td>${p.nombre}</td>
 
-            <td>$${p.compra}</td>
+            <td>$${p.costo}</td>
 
             <td>$${p.venta}</td>
 
-            <td>${p.stockInicial}</td>
-
-            <td>${p.stockActual}</td>
 
             <td>
 
-                <button onclick="editar(${i})">✏️</button>
+                <button onclick="eliminarProducto(${p.id})">
 
-                <button onclick="eliminar(${i})">🗑️</button>
+                    🗑️
+
+                </button>
 
             </td>
+
 
         </tr>
 
         `;
 
+
     });
+
 
 }
 
+
+
 // ===============================
-// ELIMINAR
+// ELIMINAR PRODUCTO
 // ===============================
-function eliminar(i) {
+
+async function eliminarProducto(id) {
+
 
     if (confirm("¿Eliminar producto?")) {
 
-        productos.splice(i, 1);
 
-        guardarProductos();
+        const { error } = await supabase
+            .from("productos")
+            .delete()
+            .eq("id", id);
 
-        mostrarProductos();
+
+
+        if (error) {
+
+            console.error("Error eliminando:", error);
+            return;
+
+        }
+
+
+        cargarProductos();
+
 
     }
 
 }
 
-// ===============================
-// EDITAR
-// ===============================
-function editar(i) {
 
-    const p = productos[i];
+// Hacer visible el botón eliminar
 
-    document.getElementById("codigo").value = p.codigo;
-    document.getElementById("nombre").value = p.nombre;
-    document.getElementById("precioCompra").value = p.compra;
-    document.getElementById("precioVenta").value = p.venta;
+window.eliminarProducto = eliminarProducto;
 
-    document.getElementById("stock").value = p.stockActual;
 
-    eliminar(i);
-
-}
 
 // ===============================
 // LIMPIAR
 // ===============================
+
 function limpiar() {
+
 
     document.getElementById("codigo").value = "";
     document.getElementById("nombre").value = "";
     document.getElementById("precioCompra").value = "";
     document.getElementById("precioVenta").value = "";
-    document.getElementById("stock").value = "";
+
 
 }
