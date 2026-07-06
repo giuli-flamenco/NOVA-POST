@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Egresos - NOVA POST</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <h1>💸 EGRESOS DE CAJA</h1>
+
+    <button class="salir" onclick="location.href='index.html'">
+        🏠 Inicio
+    </button>
+</header>
+
+<div class="contenedor">
+
+    <h2>Registrar egreso</h2>
+
+    <input type="text" id="proveedor" placeholder="Proveedor">
+
+    <input type="text" id="motivo" placeholder="Motivo del gasto">
+
+    <input type="number" id="monto" placeholder="Monto">
+
+    <button onclick="guardarEgreso()">
+        💾 Guardar Egreso
+    </button>
+
+</div>
+
+<script src="egresos.js"></script>
+
+</body>
+</html>

@@ -1,3 +1,41 @@
-<button onclick="window.location.href='clientes.html'">
-    👥 Clientes
-</button>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <<title>Ventas - NOVA POST</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <h1>👤 CLIENTES / FIADOS</h1>
+
+    <button onclick="location.href='index.html'">
+        🏠 Inicio
+    </button>
+
+</header>
+
+<div class="contenedor">
+
+    <h2>➕ Agregar Cliente</h2>
+
+    <input id="nombre" placeholder="Nombre del cliente">
+    <input id="deuda" type="number" placeholder="Deuda inicial (0 si no debe)">
+    
+    <button onclick="agregarCliente()">Guardar</button>
+
+    <hr>
+
+    <h2>📋 Lista de Clientes</h2>
+
+    <div id="lista"></div>
+
+</div>
+
+<script src="clientes.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ventas - NOVA POST</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <h1>📦 PRODUCTOS</h1>
+
+    <button class="salir" onclick="location.href='index.html'">
+        🏠 Inicio
+    </button>
+
+</header>
+
+<div class="contenedor">
+
+    <h2>Nuevo Producto</h2>
+
+    <input
+        type="text"
+        id="codigo"
+        placeholder="Código de barras">
+
+    <input
+        type="text"
+        id="nombre"
+        placeholder="Nombre del producto">
+
+    <input
+        type="number"
+        id="precioCompra"
+        placeholder="Precio de compra">
+
+    <input
+        type="number"
+        id="precioVenta"
+        placeholder="Precio de venta">
+
+    <input
+        type="number"
+        id="stock"
+        placeholder="Stock Inicial">
+
+    <button
+        class="guardar"
+        onclick="guardarProducto()">
+
+        💾 Guardar Producto
+
+    </button>
+
+    <br><br>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Compra</th>
+                <th>Venta</th>
+                <th>Stock Inicial</th>
+                <th>Stock Actual</th>
+                <th>Acciones</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="tablaProductos">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="productos.js"></script>
+
+</body>
+</html>

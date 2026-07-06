@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios | NOVA POST</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <h1>👥 NOVA POST</h1>
+    <p>Administración de Usuarios</p>
+
+    <button class="salir" onclick="window.location.href='login.html'">
+        🚪 Salir
+    </button>
+
+</header>
+
+<div class="contenedor">
+
+    <h2>Usuarios del sistema</h2>
+
+    <div id="listaUsuarios"></div>
+
+    <br>
+
+    <button onclick="location.href='index.html'">
+        🏠 Volver al inicio
+    </button>
+
+</div>
+
+<script src="usuarios.js"></script>
+
+<script>
+
+function logout(){
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("rol");
+    location.href="login.html";
+}
+
+const lista = document.getElementById("listaUsuarios");
+
+usuarios.forEach(u => {
+
+    lista.innerHTML += `
+        <div class="tarjeta">
+            <h3>${u.usuario}</h3>
+            <p><b>Rol:</b> ${u.rol}</p>
+        </div>
+    `;
+
+});
+
+</script>
+
+</body>
+</html>

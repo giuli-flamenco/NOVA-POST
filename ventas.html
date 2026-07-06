@@ -3,23 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ventas</title>
+    <title>Ventas - NOVA POST</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+<header class="topbar">
+
+    <h1>🛒 VENTAS</h1>
+
+    <button class="salir" onclick="location.href='index.html'">
+        🏠 Inicio
+    </button>
+
+</header>
 
 <div class="contenedor">
 
-<h1>🛒 Ventas</h1>
+    <h2>Nueva Venta</h2>
 
-<p>Acá registraremos todas las ventas.</p>
+    <!-- INPUT SCANNER -->
+    <input
+        type="text"
+        id="codigo"
+        placeholder="Escanee o escriba el código de barras">
 
-<button onclick="window.location.href='index.html'">
-🏠 Volver al Inicio
-</button>
+    <button class="guardar" onclick="buscarProducto()">
+        🔍 Buscar Producto
+    </button>
+
+    <!-- 📷 SCANNER -->
+    <br><br>
+
+    <button class="guardar" onclick="iniciarScanner()">
+        📷 Abrir Cámara (Scanner)
+    </button>
+
+    <div id="reader" style="width:300px; margin-top:10px;"></div>
+
+    <hr>
+
+    <!-- TABLA -->
+    <table>
+
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+
+        <tbody id="tablaVenta"></tbody>
+
+    </table>
+
+    <br>
+
+    <h2>Total: $<span id="total">0</span></h2>
+
+    <hr>
+
+    <!-- 💳 MÉTODO DE PAGO -->
+    <h3>Método de pago</h3>
+
+    <select id="metodoPago">
+        <option value="Efectivo">💵 Efectivo</option>
+        <option value="Débito">💳 Débito</option>
+        <option value="Crédito">💳 Crédito</option>
+        <option value="Transferencia">🏦 Transferencia</option>
+    </select>
+
+    <br><br>
+
+    <input
+        type="number"
+        id="pagaCon"
+        placeholder="Cliente paga con">
+
+    <button class="guardar" onclick="calcularVuelto()">
+        💵 Calcular Vuelto
+    </button>
+
+    <h2>Vuelto: $<span id="vuelto">0</span></h2>
+
+    <br>
+
+    <button class="guardar" onclick="finalizarVenta()">
+        ✅ Finalizar Venta
+    </button>
 
 </div>
 
+<!-- LIBRERÍA SCANNER -->
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script src="ventas.js"></script>
+
 </body>
-</html>sss
+</html>

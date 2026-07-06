@@ -3,33 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Minimarket</title>
+    <title>NOVA POST | Sistema Profesional de Punto de Venta</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
 
-<div class="contenedor">
+<header class="topbar">
 
-    <h1>🛒 Minimarket</h1>
+    <h1>🛒 NOVA POST</h1>
+    <p>Sistema Profesional de Punto de Venta</p>
 
-    <p>Panel Principal</p>
+    <button class="salir" onclick="logout()">
+        🚪 Salir
+    </button>
 
-    <button>🛒 Ventas</button><br><br>
+</header>
 
-    <button>📦 Stock</button><br><br>
+<div class="dashboard">
 
-    <button>👥 Clientes</button><br><br>
+    <div class="menu">
 
-    <button>📊 Reportes</button>
+        <button onclick="location.href='ventas.html'">
+            🛒<br><br>
+            VENTAS
+        </button>
+
+        <button onclick="location.href='productos.html'">
+            📦<br><br>
+            PRODUCTOS
+        </button>
+
+        <button onclick="location.href='clientes.html'">
+            👤<br><br>
+            CLIENTES
+        </button>
+
+        <button onclick="location.href='egresos.html'">
+            💸<br><br>
+            EGRESOS
+        </button>
+
+        <button class="admin-only" onclick="location.href='usuarios.html'">
+            👥<br><br>
+            USUARIOS
+        </button>
+
+        <button class="admin-only" onclick="location.href='reportes.html'">
+            📊<br><br>
+            REPORTES
+        </button>
+
+        <button onclick="location.href='scanner.html'">
+            📷<br><br>
+            SCANNER
+        </button>
+
+    </div>
 
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="app.js"></script>
+
+<script>
+
+// ===============================
+// CERRAR SESIÓN
+// ===============================
+
+function logout() {
+
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("rol");
+
+    location.href = "login.html";
+}
+
+// ===============================
+// CONTROL DE ROLES
+// ===============================
+
+window.addEventListener("DOMContentLoaded", function () {
+
+    let rol = localStorage.getItem("rol");
+
+    console.log("ROL ACTUAL:", rol);
+
+    if (!rol) return;
+
+    rol = rol.trim().toLowerCase();
+
+    if (rol !== "admin") {
+
+        document.querySelectorAll(".admin-only").forEach(btn => {
+            btn.style.display = "none";
+        });
+
+    }
+
+});
+
+</script>
 
 </body>
-<button onclick="window.location.href='ventas.html'">
-    🛒 Ventas
-</button>
+</html>

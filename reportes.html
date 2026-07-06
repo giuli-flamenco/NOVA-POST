@@ -1,3 +1,45 @@
-<button onclick="window.location.href='reportes.html'">
-    📊 Reportes
-</button>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventas - NOVA POST</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <h1>📊 REPORTES</h1>
+
+    <button class="salir" onclick="location.href='index.html'">
+        🏠 Inicio
+    </button>
+</header>
+
+<div class="contenedor">
+
+    <h2>📅 Filtro por fecha</h2>
+
+    <input type="date" id="fechaFiltro">
+
+    <button onclick="filtrar()">🔍 Filtrar</button>
+    <button onclick="reset()">🔄 Ver todo</button>
+
+    <hr>
+
+    <h2>📈 Resumen de ventas</h2>
+
+    <div id="resumen"></div>
+
+    <hr>
+
+    <h2>🧾 Historial de ventas</h2>
+
+    <div id="historial"></div>
+
+</div>
+
+<script src="reportes.js"></script>
+
+</body>
+</html>
