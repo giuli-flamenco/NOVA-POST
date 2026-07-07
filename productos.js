@@ -1,3 +1,4 @@
+```javascript
 import { supabase } from './supabase.js'
 
 alert("ESTE ES EL PRODUCTOS JS NUEVO");
@@ -51,9 +52,16 @@ async function guardarProducto() {
     const nombre = document.getElementById("nombre").value.trim();
     const costo = Number(document.getElementById("precioCompra").value);
     const venta = Number(document.getElementById("precioVenta").value);
+    const stock = Number(document.getElementById("stock").value);
 
 
-    if (codigo === "" || nombre === "" || costo <= 0 || venta <= 0) {
+    if (
+        codigo === "" ||
+        nombre === "" ||
+        costo <= 0 ||
+        venta <= 0 ||
+        stock < 0
+    ) {
 
         alert("Complete todos los datos.");
         return;
@@ -68,7 +76,8 @@ async function guardarProducto() {
                 codigo: codigo,
                 nombre: nombre,
                 costo: costo,
-                venta: venta
+                venta: venta,
+                stock: stock
             }
         ]);
 
@@ -129,6 +138,9 @@ function mostrarProductos() {
 
             <td>$${p.venta}</td>
 
+            <td>${p.stock ?? 0}</td>
+
+            <td>${p.stock ?? 0}</td>
 
             <td>
 
@@ -139,7 +151,6 @@ function mostrarProductos() {
                 </button>
 
             </td>
-
 
         </tr>
 
@@ -203,6 +214,8 @@ function limpiar() {
     document.getElementById("nombre").value = "";
     document.getElementById("precioCompra").value = "";
     document.getElementById("precioVenta").value = "";
+    document.getElementById("stock").value = "";
 
 
 }
+```
