@@ -1,36 +1,33 @@
-```javascript
-import { supabase } from './supabase.js'
+import { supabase } from './supabase.js';
 
-alert("ESTE ES EL PRODUCTOS JS NUEVO");
-
-
-// ===============================
-// PRODUCTOS
-// ===============================
+alert("NOVA POST PRODUCTOS CONECTADO A SUPABASE");
 
 let productos = [];
 
 
-// Cargar productos al abrir
+// ===============================
+// CARGAR PRODUCTOS
+// ===============================
+
 cargarProductos();
 
-
-// ===============================
-// CARGAR PRODUCTOS DESDE SUPABASE
-// ===============================
 
 async function cargarProductos() {
 
     const { data, error } = await supabase
         .from("productos")
-        .select("*");
+        .select("*")
+        .order("id", { ascending: false });
+
 
     if (error) {
 
         console.error("Error cargando productos:", error);
-        return;
+        alert("Error conectando con productos");
 
+        return;
     }
+
 
     productos = data || [];
 
@@ -39,20 +36,29 @@ async function cargarProductos() {
 }
 
 
+
 // ===============================
 // GUARDAR PRODUCTO
 // ===============================
 
 async function guardarProducto() {
 
-    alert("Entró a guardarProducto");
-
 
     const codigo = document.getElementById("codigo").value.trim();
     const nombre = document.getElementById("nombre").value.trim();
-    const costo = Number(document.getElementById("precioCompra").value);
-    const venta = Number(document.getElementById("precioVenta").value);
-    const stock = Number(document.getElementById("stock").value);
+
+    const costo = Number(
+        document.getElementById("precioCompra").value
+    );
+
+    const venta = Number(
+        document.getElementById("precioVenta").value
+    );
+
+    const stock = Number(
+        document.getElementById("stock").value
+    );
+
 
 
     if (
@@ -63,32 +69,35 @@ async function guardarProducto() {
         stock < 0
     ) {
 
-        alert("Complete todos los datos.");
+        alert("Complete todos los datos");
         return;
 
     }
+
 
 
     const { error } = await supabase
         .from("productos")
         .insert([
             {
-                codigo: codigo,
-                nombre: nombre,
-                costo: costo,
-                venta: venta,
-                stock: stock
+                codigo,
+                nombre,
+                costo,
+                venta,
+                stock
             }
         ]);
 
 
+
     if (error) {
 
-        console.error("Error guardando producto:", error);
-        alert("Error al guardar producto");
-        return;
+        console.error("Error guardando:", error);
+        alert("No se pudo guardar el producto");
 
+        return;
     }
+
 
 
     alert("Producto guardado correctamente");
@@ -101,9 +110,11 @@ async function guardarProducto() {
 }
 
 
-// Hacer visible el botón del HTML
+
+// Permitir botón HTML
 
 window.guardarProducto = guardarProducto;
+
 
 
 
@@ -120,10 +131,12 @@ function mostrarProductos() {
     if (!tabla) return;
 
 
+
     tabla.innerHTML = "";
 
 
-    productos.forEach((p) => {
+
+    productos.forEach((p)=>{
 
 
         tabla.innerHTML += `
@@ -145,12 +158,11 @@ function mostrarProductos() {
             <td>
 
                 <button onclick="eliminarProducto(${p.id})">
-
-                    🗑️
-
+                🗑️
                 </button>
 
             </td>
+
 
         </tr>
 
@@ -164,58 +176,60 @@ function mostrarProductos() {
 
 
 
+
+
 // ===============================
 // ELIMINAR PRODUCTO
 // ===============================
 
-async function eliminarProducto(id) {
+
+async function eliminarProducto(id){
 
 
-    if (confirm("¿Eliminar producto?")) {
-
-
-        const { error } = await supabase
-            .from("productos")
-            .delete()
-            .eq("id", id);
+    if(!confirm("¿Eliminar producto?")) return;
 
 
 
-        if (error) {
-
-            console.error("Error eliminando:", error);
-            return;
-
-        }
+    const { error } = await supabase
+        .from("productos")
+        .delete()
+        .eq("id", id);
 
 
-        cargarProductos();
 
+    if(error){
 
+        console.error(error);
+        alert("No se pudo eliminar");
+
+        return;
     }
+
+
+    cargarProductos();
+
 
 }
 
 
-// Hacer visible el botón eliminar
 
 window.eliminarProducto = eliminarProducto;
 
 
 
+
 // ===============================
-// LIMPIAR
+// LIMPIAR CAMPOS
 // ===============================
 
-function limpiar() {
+function limpiar(){
 
 
-    document.getElementById("codigo").value = "";
-    document.getElementById("nombre").value = "";
-    document.getElementById("precioCompra").value = "";
-    document.getElementById("precioVenta").value = "";
-    document.getElementById("stock").value = "";
+    document.getElementById("codigo").value="";
+    document.getElementById("nombre").value="";
+    document.getElementById("precioCompra").value="";
+    document.getElementById("precioVenta").value="";
+    document.getElementById("stock").value="";
 
 
 }
-```
